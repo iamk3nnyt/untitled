@@ -103,8 +103,8 @@ export default function Home() {
               {/* Features List */}
               <div className="mb-8 space-y-4">
                 {features.map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
                       {feature.icon}
                     </div>
                     <div>
