@@ -26,8 +26,8 @@ export default function DownloadPage() {
 
           {/* Description */}
           <p className="mb-8 text-xl leading-relaxed text-gray-600">
-            We're building a native app for your disposal space. While we work
-            on it, you can use the full experience in your browser.
+            We&apos;re building a native app for your disposal space. While we
+            work on it, you can use the full experience in your browser.
           </p>
 
           {/* Expected Launch */}
@@ -62,8 +62,8 @@ export default function DownloadPage() {
           {/* Footer Note */}
           <div className="mt-12">
             <p className="text-sm text-gray-500">
-              Start using the web version and we'll notify you when the app is
-              ready.
+              Start using the web version and we&apos;ll notify you when the app
+              is ready.
             </p>
           </div>
         </div>
