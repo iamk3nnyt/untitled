@@ -47,6 +47,8 @@ export default function WaitlistPage() {
               Already want to start disposing?{" "}
               <Link
                 href="/dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-medium text-gray-900 hover:underline"
               >
                 Try the web version
