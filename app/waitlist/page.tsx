@@ -1,5 +1,6 @@
 import { Archive, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 
 export default function WaitlistPage() {
   return (
@@ -37,7 +38,7 @@ export default function WaitlistPage() {
           {/* Typeform Embed */}
           <div className="mb-12">
             <div data-tf-live="01K63T0QEKACADFRY383DDGQFA"></div>
-            <script src="//embed.typeform.com/next/embed.js"></script>
+            <Script src="//embed.typeform.com/next/embed.js"></Script>
           </div>
 
           {/* Footer */}
