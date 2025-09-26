@@ -291,8 +291,8 @@ export default function Home() {
               </div>
 
               {/* File List */}
-              <div className="flex-1 overflow-auto py-6 pr-6 pl-3">
-                <div className="overflow-hidden">
+              <div className="flex-1 overflow-auto py-3 pr-6 pl-3">
+                <div className="overflow-hidden py-3">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
