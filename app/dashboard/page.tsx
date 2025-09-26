@@ -27,26 +27,30 @@ export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([
     {
-      id: "q1",
-      name: "Q1 overview",
+      id: "old-projects",
+      name: "Old Projects",
       type: "folder",
       isActive: true,
       isExpanded: false,
     },
-    { id: "team", name: "Team review", type: "file" },
+    { id: "random-docs", name: "Random Docs", type: "file" },
     {
-      id: "design",
-      name: "Design",
+      id: "maybe-later",
+      name: "Maybe Later",
       type: "folder",
       isExpanded: true,
       children: [
-        { id: "fetch", name: "FetchTable.py", type: "file" },
-        { id: "cap", name: "CapTable.xls", type: "file" },
-        { id: "blonded", name: "Blonded", type: "file" },
-        { id: "finances", name: "daily-finances", type: "folder" },
-        { id: "town", name: "Town hall", type: "file" },
-        { id: "milestones", name: "Milestones", type: "folder" },
-        { id: "heavy", name: "Heavyweights", type: "folder" },
+        { id: "old-resume", name: "old_resume.pdf", type: "file" },
+        { id: "random-notes", name: "random_notes.txt", type: "file" },
+        { id: "maybe-useful", name: "maybe_useful.zip", type: "file" },
+        { id: "forgotten-photos", name: "forgotten_photos", type: "folder" },
+        {
+          id: "old-presentations",
+          name: "old_presentations.pptx",
+          type: "file",
+        },
+        { id: "unused-assets", name: "Unused Assets", type: "folder" },
+        { id: "temp-downloads", name: "Temp Downloads", type: "folder" },
       ],
     },
   ]);
@@ -54,52 +58,52 @@ export default function Home() {
   const files = [
     {
       id: "1",
-      name: "Q1 overview",
-      type: "folder",
-      size: "",
-      lastModified: "Sep. 26 2025",
+      name: "old_resume.pdf",
+      type: "PDF",
+      size: "2.1MB",
+      lastModified: "Mar. 15 2024",
     },
     {
       id: "2",
-      name: "Team review",
-      type: "DOCX",
-      size: "6.5KB",
-      lastModified: "Sep. 26 2025",
+      name: "random_notes.txt",
+      type: "TXT",
+      size: "45KB",
+      lastModified: "Jun. 08 2024",
     },
     {
       id: "3",
-      name: "BG-02.png",
-      type: "PNG",
-      size: "5.5GB",
-      lastModified: "Sep. 26 2025",
+      name: "maybe_useful.zip",
+      type: "ZIP",
+      size: "156MB",
+      lastModified: "Jan. 22 2024",
     },
     {
       id: "4",
-      name: "FetchTable.py",
-      type: "CODE",
-      size: "7.5MB",
-      lastModified: "Sep. 26 2025",
+      name: "forgotten_photos",
+      type: "folder",
+      size: "",
+      lastModified: "Dec. 03 2023",
     },
     {
       id: "5",
-      name: "CapTable.xls",
-      type: "XLS",
-      size: "7.0GB",
-      lastModified: "Sep. 26 2025",
+      name: "old_presentations.pptx",
+      type: "PPTX",
+      size: "89MB",
+      lastModified: "Nov. 14 2023",
     },
     {
       id: "6",
-      name: "Blonded",
-      type: "MP3",
-      size: "4.5MB",
-      lastModified: "Sep. 26 2025",
+      name: "temp_download.dmg",
+      type: "DMG",
+      size: "1.2GB",
+      lastModified: "Aug. 29 2024",
     },
     {
       id: "7",
-      name: "daily-finances",
-      type: "ZIP",
-      size: "8.0KB",
-      lastModified: "Sep. 26 2025",
+      name: "unused_assets",
+      type: "folder",
+      size: "",
+      lastModified: "May. 17 2024",
     },
     {
       id: "8",
@@ -173,11 +177,11 @@ export default function Home() {
               <div className="flex h-16 items-center border-b border-gray-200 px-4">
                 <div className="flex items-center space-x-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500">
-                    <span className="text-sm font-medium text-white">DB</span>
+                    <span className="text-sm font-medium text-white">DS</span>
                   </div>
                   <div>
-                    <div className="text-sm font-medium">Digital Bin</div>
-                    <div className="text-xs text-gray-500">5 GB storage</div>
+                    <div className="text-sm font-medium">Disposal Space</div>
+                    <div className="text-xs text-gray-500">Hidden Archive</div>
                   </div>
                 </div>
               </div>
@@ -186,22 +190,22 @@ export default function Home() {
               <div className="space-y-1 px-4 py-3">
                 <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                   <Upload className="h-4 w-4" />
-                  <span>Upload</span>
+                  <span>Dispose</span>
                 </button>
                 <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                   <Search className="h-4 w-4" />
-                  <span>Search</span>
+                  <span>Find</span>
                 </button>
                 <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                   <Settings className="h-4 w-4" />
-                  <span>Settings</span>
+                  <span>Restore</span>
                 </button>
               </div>
 
               {/* File Tree */}
               <div className="px-4 py-2">
                 <div className="mb-3 text-xs font-medium tracking-wider text-gray-400 uppercase">
-                  GENERAL
+                  DISPOSED
                 </div>
                 <div className="space-y-0.5">
                   {sidebarItems.map((item) => (
@@ -277,15 +281,15 @@ export default function Home() {
               <div className="flex h-16 w-full items-center justify-between border-b border-gray-200 px-6">
                 <div className="flex items-center">
                   <h2 className="text-base font-medium text-gray-900">
-                    Design
+                    Maybe Later
                   </h2>
                 </div>
                 <div className="flex items-center space-x-3">
                   <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
-                    Share
+                    Restore
                   </button>
                   <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
-                    Upload
+                    Dispose
                   </button>
                 </div>
               </div>

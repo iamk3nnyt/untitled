@@ -1,10 +1,10 @@
 import {
+  Archive,
   ArrowRight,
   ArrowUpDown,
   ChevronRight,
   File,
   Folder,
-  Lock,
   MoreHorizontal,
   Plus,
   Search,
@@ -91,7 +91,8 @@ export default function Home() {
                 Your Digital
                 <br />
                 Disposal{" "}
-                <Lock className="mb-2 inline h-12 w-12 text-gray-700" /> Space
+                <Archive className="mb-2 inline h-12 w-12 text-gray-700" />{" "}
+                Space
               </h1>
               <p className="mb-8 text-xl leading-relaxed text-gray-600">
                 Store things you never want to see cluttering your life, but
