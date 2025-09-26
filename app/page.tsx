@@ -84,7 +84,7 @@ export default function Home() {
       {/* Hero Section */}
       <div className="w-full px-6 py-12">
         <div className="mx-auto max-w-7xl">
-          <div className="grid items-center gap-12 xl:grid-cols-2">
+          <div className="grid grid-cols-1 items-center gap-12 xl:grid-cols-2">
             {/* Left Column - Hero Content */}
             <div className="text-gray-900">
               <h1 className="mb-6 text-5xl leading-tight font-bold xl:text-6xl">
@@ -119,7 +119,7 @@ export default function Home() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-col gap-4 lg:flex-row">
                 <Link
                   href="/dashboard"
                   className="group inline-flex items-center justify-center rounded-xl bg-gray-900 px-8 py-4 font-medium text-white transition-colors hover:bg-gray-800"
@@ -127,9 +127,12 @@ export default function Home() {
                   Login
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
-                <button className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-8 py-4 font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50">
-                  Sign Up
-                </button>
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-8 py-4 font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                >
+                  Start Disposing
+                </Link>
               </div>
             </div>
 
