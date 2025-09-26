@@ -80,7 +80,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen items-center bg-white">
+    <div className="flex min-h-screen items-center overflow-x-hidden bg-white">
       {/* Hero Section */}
       <div className="w-full px-6 py-12">
         <div className="mx-auto max-w-7xl">
