@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   ArrowUpDown,
   ChevronRight,
@@ -160,15 +161,11 @@ export default function Home() {
     }
   };
 
-  const getTypeColor = (type: string) => {
-    return "bg-gray-100 text-gray-600";
-  };
-
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
       <div className="h-screen">
-        <div className="h-full overflow-hidden">
+        <div className="h-full overflow-x-auto overflow-y-hidden">
           <div className="flex h-full">
             {/* Sidebar */}
             <div className="h-full w-64 border-r border-gray-200 bg-gray-50">
@@ -207,22 +204,25 @@ export default function Home() {
                   GENERAL
                 </div>
                 <div className="space-y-0.5">
-                  {sidebarItems.map((item, index) => (
+                  {sidebarItems.map((item) => (
                     <div key={item.id}>
                       <div
-                        className={`flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 text-sm ${
+                        className={cn(
+                          "flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 text-sm",
                           item.isActive
                             ? "bg-gray-200 text-gray-900"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                            : "text-gray-700 hover:bg-gray-100",
+                        )}
                       >
-                        <div className="flex flex-1 items-center space-x-2">
+                        <div className="flex flex-1 items-center space-x-2 truncate">
                           {item.type === "folder" ? (
-                            <Folder className="h-4 w-4" />
+                            <Folder className="h-4 w-4 shrink-0" />
                           ) : (
-                            <File className="h-4 w-4" />
+                            <File className="h-4 w-4 shrink-0" />
                           )}
-                          <span>{item.name}</span>
+                          <span className="truncate whitespace-nowrap">
+                            {item.name}
+                          </span>
                         </div>
                         {item.type === "folder" && (
                           <div className="flex items-center space-x-1">
@@ -292,8 +292,8 @@ export default function Home() {
 
               {/* File List */}
               <div className="flex-1 overflow-auto py-3 pr-6 pl-3">
-                <div className="overflow-hidden py-3">
-                  <table className="w-full">
+                <div className="overflow-x-auto py-3">
+                  <table className="w-full min-w-[800px]">
                     <thead>
                       <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
                         <th className="w-12 pb-3 pl-3 font-medium">
@@ -342,7 +342,9 @@ export default function Home() {
                           <td className="py-4">
                             {file.type !== "folder" && (
                               <span
-                                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getTypeColor(file.type)}`}
+                                className={
+                                  "inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600"
+                                }
                               >
                                 {file.type}
                               </span>
