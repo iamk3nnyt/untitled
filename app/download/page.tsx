@@ -5,7 +5,7 @@ export default function DownloadPage() {
   return (
     <div className="flex min-h-screen items-center bg-white">
       <div className="w-full px-6 py-12">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-7xl">
           {/* Back Link */}
           <div className="mb-12">
             <Link
@@ -39,7 +39,7 @@ export default function DownloadPage() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col gap-4 lg:flex-row lg:justify-center">
+          <div className="flex flex-col gap-4 lg:flex-row">
             <Link
               href="/dashboard"
               target="_blank"
@@ -49,14 +49,12 @@ export default function DownloadPage() {
               <Archive className="mr-2 h-5 w-5" />
               Start Disposing
             </Link>
-            <Link
-              href="https://form.typeform.com/to/jSfliBue"
-              target="_blank"
-              rel="noopener noreferrer"
+            <a
+              href="/waitlist"
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-8 py-4 font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
             >
               Get notified
-            </Link>
+            </a>
           </div>
 
           {/* Footer Note */}
