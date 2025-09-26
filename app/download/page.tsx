@@ -42,13 +42,17 @@ export default function DownloadPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:justify-center">
             <Link
               href="/dashboard"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-xl bg-gray-900 px-8 py-4 font-medium text-white transition-colors hover:bg-gray-800"
             >
               <Archive className="mr-2 h-5 w-5" />
               Start Disposing
             </Link>
             <Link
-              href="/"
+              href="https://form.typeform.com/to/jSfliBue"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-8 py-4 font-medium text-gray-700 transition-colors hover:border-gray-400 hover:bg-gray-50"
             >
               Get notified

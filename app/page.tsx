@@ -123,6 +123,8 @@ export default function Home() {
               <div className="flex flex-col gap-4 lg:flex-row">
                 <Link
                   href="/dashboard"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center rounded-xl bg-gray-900 px-8 py-4 font-medium text-white transition-colors hover:bg-gray-800"
                 >
                   Start Disposing
