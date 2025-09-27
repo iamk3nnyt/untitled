@@ -109,9 +109,9 @@ export default function TermsPage() {
                   </li>
                 </ul>
                 <p>
-                  You acknowledge that while items are "disposed" from your
-                  active view, they remain stored and accessible through the
-                  disposal space interface.
+                  You acknowledge that while items are &quot;disposed&quot; from
+                  your active view, they remain stored and accessible through
+                  the disposal space interface.
                 </p>
               </div>
             </section>
@@ -188,9 +188,9 @@ export default function TermsPage() {
               </h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Our disposal space service is provided "as is" without
-                  warranties of any kind. We are not liable for any loss of
-                  disposed items, service interruptions, or consequential
+                  Our disposal space service is provided &quot;as is&quot;
+                  without warranties of any kind. We are not liable for any loss
+                  of disposed items, service interruptions, or consequential
                   damages.
                 </p>
                 <p>

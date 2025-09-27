@@ -200,7 +200,7 @@ export default function PrivacyPage() {
                   </li>
                   <li>
                     <strong>Legal Requirements:</strong> When required by law,
-                    court order, or to protect our rights and users' safety
+                    court order, or to protect our rights and users&apos; safety
                   </li>
                   <li>
                     <strong>Business Transfer:</strong> In the event of a merger
@@ -369,8 +369,9 @@ export default function PrivacyPage() {
                   <p>General Support: help@disposalspace.com</p>
                 </div>
                 <p className="mt-4 text-sm">
-                  For privacy-related requests, please include "Privacy Request"
-                  in your subject line and allow up to 30 days for response.
+                  For privacy-related requests, please include &quot;Privacy
+                  Request&quot; in your subject line and allow up to 30 days for
+                  response.
                 </p>
               </div>
             </section>
