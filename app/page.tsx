@@ -143,25 +143,8 @@ export default function Home() {
             <div className="relative w-full max-w-5xl">
               {/* Dashboard Preview */}
               <div className="h-[600px] w-[1200px] overflow-hidden rounded-2xl border border-gray-200 bg-white">
-                {/* Mock Header */}
-                <div className="flex h-16 items-center justify-between border-b border-gray-200 px-8">
-                  <div className="flex items-center">
-                    <h2 className="text-lg font-medium text-gray-900">
-                      Maybe Later
-                    </h2>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <button className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700">
-                      Settings
-                    </button>
-                    <button className="rounded-md bg-gray-900 px-4 py-2 text-sm text-white">
-                      Import
-                    </button>
-                  </div>
-                </div>
-
                 {/* Mock Sidebar and Content */}
-                <div className="flex h-[calc(100%-4rem)]">
+                <div className="flex h-full">
                   <div className="flex w-64 flex-col border-r border-gray-200 bg-gray-50">
                     {/* Sidebar Header */}
                     <div className="flex h-16 items-center border-b border-gray-200 px-4">
@@ -271,65 +254,90 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Mock File List */}
-                  <div className="flex-1 overflow-auto py-3 pr-6 pl-3">
-                    <div className="overflow-x-auto py-3">
-                      <table className="w-full min-w-[800px]">
-                        <thead>
-                          <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
-                            <th className="w-12 pb-3 pl-3 font-medium">
-                              <input
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
-                              />
-                            </th>
-                            <th className="pb-3 font-medium">
-                              <div className="flex items-center space-x-2">
-                                <span>Name</span>
-                                <ArrowUpDown className="h-4 w-4" />
-                              </div>
-                            </th>
-                            <th className="pb-3 font-medium">Type</th>
-                            <th className="pb-3 font-medium">Size</th>
-                            <th className="pb-3 font-medium">Last modified</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                          {mockFiles.map((file, index) => (
-                            <tr key={index} className="group hover:bg-gray-50">
-                              <td className="py-4 pl-3">
+                  {/* Mock Main Content Area */}
+                  <div className="flex h-full flex-1 flex-col">
+                    {/* Mock Content Header */}
+                    <div className="flex h-16 w-full items-center justify-between border-b border-gray-200 px-6">
+                      <div className="flex items-center">
+                        <h2 className="text-base font-medium text-gray-900">
+                          Maybe Later
+                        </h2>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+                          Settings
+                        </button>
+                        <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
+                          Import
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Mock File List */}
+                    <div className="flex-1 overflow-auto py-3 pr-6 pl-3">
+                      <div className="overflow-x-auto py-3">
+                        <table className="w-full min-w-[800px]">
+                          <thead>
+                            <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
+                              <th className="w-12 pb-3 pl-3 font-medium">
                                 <input
                                   type="checkbox"
                                   className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
                                 />
-                              </td>
-                              <td className="py-4">
-                                <div className="flex items-center space-x-3">
-                                  <div className="text-2xl">
-                                    {getFileIcon(file.type)}
-                                  </div>
-                                  <span className="text-sm font-medium text-gray-900">
-                                    {file.name}
-                                  </span>
+                              </th>
+                              <th className="pb-3 font-medium">
+                                <div className="flex items-center space-x-2">
+                                  <span>Name</span>
+                                  <ArrowUpDown className="h-4 w-4" />
                                 </div>
-                              </td>
-                              <td className="py-4">
-                                {file.type !== "folder" && (
-                                  <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
-                                    {file.type}
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-4 text-sm text-gray-500">
-                                {file.size}
-                              </td>
-                              <td className="py-4 text-sm text-gray-500">
-                                {file.date}
-                              </td>
+                              </th>
+                              <th className="pb-3 font-medium">Type</th>
+                              <th className="pb-3 font-medium">Size</th>
+                              <th className="pb-3 font-medium">
+                                Last modified
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            {mockFiles.map((file, index) => (
+                              <tr
+                                key={index}
+                                className="group hover:bg-gray-50"
+                              >
+                                <td className="py-4 pl-3">
+                                  <input
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                                  />
+                                </td>
+                                <td className="py-4">
+                                  <div className="flex items-center space-x-3">
+                                    <div className="text-2xl">
+                                      {getFileIcon(file.type)}
+                                    </div>
+                                    <span className="text-sm font-medium text-gray-900">
+                                      {file.name}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td className="py-4">
+                                  {file.type !== "folder" && (
+                                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+                                      {file.type}
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="py-4 text-sm text-gray-500">
+                                  {file.size}
+                                </td>
+                                <td className="py-4 text-sm text-gray-500">
+                                  {file.date}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
