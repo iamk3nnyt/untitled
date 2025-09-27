@@ -169,7 +169,7 @@ export default function Home() {
                     <div className="space-y-1 px-4 py-3">
                       <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                         <Upload className="h-4 w-4" />
-                        <span>Import</span>
+                        <span>Upload</span>
                       </button>
                       <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                         <Search className="h-4 w-4" />
@@ -281,7 +281,7 @@ export default function Home() {
                           Settings
                         </button>
                         <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
-                          Import
+                          Upload
                         </button>
                       </div>
                     </div>

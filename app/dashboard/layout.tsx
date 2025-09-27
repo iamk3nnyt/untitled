@@ -233,7 +233,7 @@ export default function DashboardLayout({
               <div className="space-y-1 px-4 py-3">
                 <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                   <Upload className="h-4 w-4" />
-                  <span>Import</span>
+                  <span>Upload</span>
                 </button>
                 <button
                   onClick={() => setIsSearchModalOpen(true)}
