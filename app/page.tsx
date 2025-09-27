@@ -188,10 +188,23 @@ export default function Home() {
                       </div>
                       <div className="space-y-0.5">
                         <div className="flex cursor-pointer items-center space-x-2 rounded-md bg-gray-200 px-2 py-1 text-sm text-gray-900">
-                          <Folder className="h-4 w-4 shrink-0" />
-                          <span className="truncate whitespace-nowrap">
-                            Old Projects
-                          </span>
+                          <div className="flex flex-1 items-center space-x-2 truncate">
+                            <Folder className="h-4 w-4 shrink-0" />
+                            <span className="truncate whitespace-nowrap">
+                              Old Projects
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <button className="rounded p-0.5 hover:bg-gray-200">
+                              <MoreHorizontal className="h-3 w-3" />
+                            </button>
+                            <button className="rounded p-0.5 hover:bg-gray-200">
+                              <Plus className="h-3 w-3" />
+                            </button>
+                            <button className="rounded p-0.5 hover:bg-gray-200">
+                              <ChevronRight className="h-3 w-3 transition-transform" />
+                            </button>
+                          </div>
                         </div>
                         <div className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                           <File className="h-4 w-4 shrink-0" />
@@ -219,7 +232,7 @@ export default function Home() {
                           </div>
                         </div>
                         {/* Nested items */}
-                        <div className="ml-6 space-y-0.5">
+                        <div className="mt-0.5 ml-6 space-y-0.5">
                           <div className="flex cursor-pointer items-center space-x-2 rounded-md px-2 py-0.5 text-sm text-gray-600 hover:bg-gray-100">
                             <File className="h-3 w-3" />
                             <span>old_resume.pdf</span>
