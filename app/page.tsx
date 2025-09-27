@@ -161,8 +161,8 @@ export default function Home() {
                 </div>
 
                 {/* Mock Sidebar and Content */}
-                <div className="flex h-full">
-                  <div className="w-64 border-r border-gray-200 bg-gray-50">
+                <div className="flex h-[calc(100%-4rem)]">
+                  <div className="flex w-64 flex-col border-r border-gray-200 bg-gray-50">
                     {/* Sidebar Header */}
                     <div className="flex h-16 items-center border-b border-gray-200 px-4">
                       <div className="flex items-center space-x-3">
@@ -249,6 +249,23 @@ export default function Home() {
                             <File className="h-3 w-3" />
                             <span>maybe_useful.zip</span>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Usage Details */}
+                    <div className="mt-auto border-t border-gray-200 p-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <span>Storage Used</span>
+                          <span>2.4 GB of 15 GB</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-gray-200">
+                          <div className="h-1.5 w-1/6 rounded-full bg-green-500"></div>
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <span>Items Disposed</span>
+                          <span>247</span>
                         </div>
                       </div>
                     </div>
