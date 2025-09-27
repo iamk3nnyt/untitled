@@ -383,7 +383,13 @@ export default function DashboardLayout({
                             >
                               <MoreHorizontal className="h-3 w-3" />
                             </button>
-                            <button className="rounded p-0.5 hover:bg-gray-200">
+                            <button
+                              className="rounded p-0.5 hover:bg-gray-200"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                triggerFileUpload();
+                              }}
+                            >
                               <Plus className="h-3 w-3" />
                             </button>
                             <button
