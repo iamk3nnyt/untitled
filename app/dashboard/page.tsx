@@ -12,6 +12,7 @@ import {
   Settings,
   Upload,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 type SidebarItem = {
@@ -196,10 +197,13 @@ export default function Home() {
                   <Search className="h-4 w-4" />
                   <span>Find</span>
                 </button>
-                <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
+                <Link
+                  href="/dashboard/settings"
+                  className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100"
+                >
                   <Settings className="h-4 w-4" />
                   <span>Settings</span>
-                </button>
+                </Link>
               </div>
 
               {/* File Tree */}
@@ -302,9 +306,12 @@ export default function Home() {
                   </h2>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+                  <Link
+                    href="/dashboard/settings"
+                    className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                  >
                     Settings
-                  </button>
+                  </Link>
                   <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
                     Dispose
                   </button>
