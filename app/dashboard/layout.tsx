@@ -42,6 +42,10 @@ export default function DashboardLayout({
     folderName: string;
   }>({ isOpen: false, folderId: "", folderName: "" });
   const [renameValue, setRenameValue] = useState("");
+  const [uploadingFiles, setUploadingFiles] = useState<
+    { name: string; progress: number; size: string }[]
+  >([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([
     {
@@ -109,6 +113,89 @@ export default function DashboardLayout({
       prev.filter((item) => item.id !== folderActionsModal.folderId),
     );
     closeFolderActions();
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
+
+  const simulateUpload = (file: File) => {
+    return new Promise<void>((resolve) => {
+      const fileInfo = {
+        name: file.name,
+        progress: 0,
+        size: formatFileSize(file.size),
+      };
+
+      setUploadingFiles((prev) => [...prev, fileInfo]);
+
+      const interval = setInterval(() => {
+        setUploadingFiles((prev) =>
+          prev.map((f) =>
+            f.name === file.name
+              ? {
+                  ...f,
+                  progress: Math.min(f.progress + Math.random() * 15 + 5, 100),
+                }
+              : f,
+          ),
+        );
+      }, 200);
+
+      // Complete upload after 2-4 seconds
+      const uploadTime = 2000 + Math.random() * 2000;
+      setTimeout(() => {
+        clearInterval(interval);
+        setUploadingFiles((prev) =>
+          prev.map((f) => (f.name === file.name ? { ...f, progress: 100 } : f)),
+        );
+
+        // Remove from uploading list after showing completion
+        setTimeout(() => {
+          setUploadingFiles((prev) => prev.filter((f) => f.name !== file.name));
+          resolve();
+        }, 1000);
+      }, uploadTime);
+    });
+  };
+
+  const handleFileUpload = async (files: FileList | File[]) => {
+    const fileArray = Array.from(files);
+    if (fileArray.length > 0) {
+      setIsUploading(true);
+
+      // Simulate uploading each file
+      const uploadPromises = fileArray.map((file) => simulateUpload(file));
+
+      try {
+        await Promise.all(uploadPromises);
+        // Show success message briefly
+        setTimeout(() => {
+          alert(`${fileArray.length} file(s) disposed successfully!`);
+        }, 500);
+      } catch (error) {
+        console.error("Upload failed:", error);
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
+  const triggerFileUpload = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.multiple = true;
+    input.onchange = (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files) {
+        handleFileUpload(target.files);
+      }
+    };
+    input.click();
   };
 
   // Mock search results
@@ -231,7 +318,10 @@ export default function DashboardLayout({
 
               {/* Navigation */}
               <div className="space-y-1 px-4 py-3">
-                <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
+                <button
+                  onClick={triggerFileUpload}
+                  className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100"
+                >
                   <Upload className="h-4 w-4" />
                   <span>Upload</span>
                 </button>
@@ -389,7 +479,10 @@ export default function DashboardLayout({
                     >
                       Settings
                     </Link>
-                    <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
+                    <button
+                      onClick={triggerFileUpload}
+                      className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800"
+                    >
                       Upload
                     </button>
                   </div>
@@ -397,6 +490,42 @@ export default function DashboardLayout({
               )}
 
               {children}
+
+              {/* Upload Progress */}
+              {uploadingFiles.length > 0 && (
+                <div className="absolute right-4 bottom-4 w-80 space-y-2">
+                  {uploadingFiles.map((file) => (
+                    <div
+                      key={file.name}
+                      className="rounded-lg border border-gray-200 bg-white p-4 shadow-lg"
+                    >
+                      <div className="mb-2 flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <Upload className="h-4 w-4 text-green-500" />
+                          <span className="truncate text-sm font-medium text-gray-900">
+                            {file.name}
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-500">
+                          {file.size}
+                        </span>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-xs text-gray-500">
+                          <span>Disposing...</span>
+                          <span>{Math.round(file.progress)}%</span>
+                        </div>
+                        <div className="h-2 w-full rounded-full bg-gray-200">
+                          <div
+                            className="h-2 rounded-full bg-green-500 transition-all duration-300"
+                            style={{ width: `${file.progress}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
