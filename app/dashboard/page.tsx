@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowUpDown, Upload } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -203,148 +202,127 @@ export default function Home() {
 
   return (
     <>
-      {/* Main Content Area */}
-      <div className="flex h-full flex-1 flex-col">
-        {/* Content Header */}
-        <div className="flex h-16 w-full items-center justify-between border-b border-gray-200 px-6">
-          <div className="flex items-center">
-            <h2 className="text-base font-medium text-gray-900">Maybe Later</h2>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Link
-              href="/dashboard/settings"
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
-            >
-              Settings
-            </Link>
-            <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
-              Import
-            </button>
-          </div>
-        </div>
-
-        {/* File List */}
-        <div
-          className="relative flex-1 overflow-auto py-3 pr-6 pl-3"
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <div className="overflow-x-auto py-3">
-            <table className="w-full min-w-[800px]">
-              <thead>
-                <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
-                  <th className="w-12 pb-3 pl-3 font-medium">
+      {/* File List */}
+      <div
+        className="relative flex-1 overflow-auto py-3 pr-6 pl-3"
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        <div className="overflow-x-auto py-3">
+          <table className="w-full min-w-[800px]">
+            <thead>
+              <tr className="border-b border-gray-100 text-left text-sm text-gray-500">
+                <th className="w-12 pb-3 pl-3 font-medium">
+                  <input
+                    type="checkbox"
+                    checked={isAllSelected}
+                    ref={(el) => {
+                      if (el) el.indeterminate = isIndeterminate;
+                    }}
+                    onChange={toggleSelectAll}
+                    className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                  />
+                </th>
+                <th className="pb-3 font-medium">
+                  <div className="flex items-center space-x-2">
+                    <span>Name</span>
+                    <ArrowUpDown className="h-4 w-4" />
+                  </div>
+                </th>
+                <th className="pb-3 font-medium">Type</th>
+                <th className="pb-3 font-medium">Size</th>
+                <th className="pb-3 font-medium">Last modified</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {files.map((file) => (
+                <tr key={file.id} className="group hover:bg-gray-50">
+                  <td className="py-4 pl-3">
                     <input
                       type="checkbox"
-                      checked={isAllSelected}
-                      ref={(el) => {
-                        if (el) el.indeterminate = isIndeterminate;
-                      }}
-                      onChange={toggleSelectAll}
+                      checked={selectedFiles.includes(file.id)}
+                      onChange={() => toggleFileSelection(file.id)}
                       className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
                     />
-                  </th>
-                  <th className="pb-3 font-medium">
-                    <div className="flex items-center space-x-2">
-                      <span>Name</span>
-                      <ArrowUpDown className="h-4 w-4" />
-                    </div>
-                  </th>
-                  <th className="pb-3 font-medium">Type</th>
-                  <th className="pb-3 font-medium">Size</th>
-                  <th className="pb-3 font-medium">Last modified</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {files.map((file) => (
-                  <tr key={file.id} className="group hover:bg-gray-50">
-                    <td className="py-4 pl-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedFiles.includes(file.id)}
-                        onChange={() => toggleFileSelection(file.id)}
-                        className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
-                      />
-                    </td>
-                    <td className="py-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="text-2xl">{getFileIcon(file.type)}</div>
-                        <span className="text-sm font-medium text-gray-900">
-                          {file.name}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      {file.type !== "folder" && (
-                        <span
-                          className={
-                            "inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600"
-                          }
-                        >
-                          {file.type}
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-4 text-sm text-gray-500">{file.size}</td>
-                    <td className="py-4 text-sm text-gray-500">
-                      {file.lastModified}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Upload Progress */}
-          {uploadingFiles.length > 0 && (
-            <div className="absolute right-4 bottom-4 w-80 space-y-2">
-              {uploadingFiles.map((file) => (
-                <div
-                  key={file.name}
-                  className="rounded-lg border border-gray-200 bg-white p-4 shadow-lg"
-                >
-                  <div className="mb-2 flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Upload className="h-4 w-4 text-green-500" />
-                      <span className="truncate text-sm font-medium text-gray-900">
+                  </td>
+                  <td className="py-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-2xl">{getFileIcon(file.type)}</div>
+                      <span className="text-sm font-medium text-gray-900">
                         {file.name}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-500">{file.size}</span>
+                  </td>
+                  <td className="py-4">
+                    {file.type !== "folder" && (
+                      <span
+                        className={
+                          "inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600"
+                        }
+                      >
+                        {file.type}
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4 text-sm text-gray-500">{file.size}</td>
+                  <td className="py-4 text-sm text-gray-500">
+                    {file.lastModified}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Upload Progress */}
+        {uploadingFiles.length > 0 && (
+          <div className="absolute right-4 bottom-4 w-80 space-y-2">
+            {uploadingFiles.map((file) => (
+              <div
+                key={file.name}
+                className="rounded-lg border border-gray-200 bg-white p-4 shadow-lg"
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Upload className="h-4 w-4 text-green-500" />
+                    <span className="truncate text-sm font-medium text-gray-900">
+                      {file.name}
+                    </span>
                   </div>
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>Disposing...</span>
-                      <span>{Math.round(file.progress)}%</span>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-gray-200">
-                      <div
-                        className="h-2 rounded-full bg-green-500 transition-all duration-300"
-                        style={{ width: `${file.progress}%` }}
-                      />
-                    </div>
+                  <span className="text-xs text-gray-500">{file.size}</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Disposing...</span>
+                    <span>{Math.round(file.progress)}%</span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-gray-200">
+                    <div
+                      className="h-2 rounded-full bg-green-500 transition-all duration-300"
+                      style={{ width: `${file.progress}%` }}
+                    />
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* Drag Overlay */}
-          {isDragOver && (
-            <div className="bg-opacity-90 absolute inset-0 flex items-center justify-center rounded-lg border-2 border-dashed border-green-300 bg-green-50">
-              <div className="text-center">
-                <Upload className="mx-auto mb-4 h-12 w-12 text-green-500" />
-                <h3 className="mb-2 text-lg font-medium text-green-700">
-                  Drop files to dispose
-                </h3>
-                <p className="text-sm text-green-600">
-                  Release to add files to your disposal space
-                </p>
               </div>
+            ))}
+          </div>
+        )}
+
+        {/* Drag Overlay */}
+        {isDragOver && (
+          <div className="bg-opacity-90 absolute inset-0 flex items-center justify-center rounded-lg border-2 border-dashed border-green-300 bg-green-50">
+            <div className="text-center">
+              <Upload className="mx-auto mb-4 h-12 w-12 text-green-500" />
+              <h3 className="mb-2 text-lg font-medium text-green-700">
+                Drop files to dispose
+              </h3>
+              <p className="text-sm text-green-600">
+                Release to add files to your disposal space
+              </p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

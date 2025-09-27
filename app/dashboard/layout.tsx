@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import {
+  ArrowLeft,
   ChevronRight,
   File,
   Folder,
@@ -204,7 +205,52 @@ export default function DashboardLayout({
               </div>
             </div>
 
-            {children}
+            {/* Main Content Area */}
+            <div className="flex h-full flex-1 flex-col">
+              {/* Content Header */}
+              {pathname === "/dashboard/settings" ? (
+                <div className="flex h-16 w-full items-center justify-between border-b border-gray-200 px-6">
+                  <div className="flex items-center space-x-3">
+                    <Link
+                      href="/dashboard"
+                      className="inline-flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      <span>Back to Dashboard</span>
+                    </Link>
+                  </div>
+                  {/* <div className="flex items-center space-x-3">
+                    <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
+                      Reset
+                    </button>
+                    <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
+                      Save Changes
+                    </button>
+                  </div> */}
+                </div>
+              ) : (
+                <div className="flex h-16 w-full items-center justify-between border-b border-gray-200 px-6">
+                  <div className="flex items-center">
+                    <h2 className="text-base font-medium text-gray-900">
+                      Maybe Later
+                    </h2>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Link
+                      href="/dashboard/settings"
+                      className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      Settings
+                    </Link>
+                    <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
+                      Import
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {children}
+            </div>
           </div>
         </div>
       </div>
