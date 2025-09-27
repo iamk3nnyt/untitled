@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
   ChevronRight,
+  Edit3,
   File,
   Folder,
   MoreHorizontal,
   Plus,
   Search,
   Settings,
+  Trash2,
   Upload,
   X,
 } from "lucide-react";
@@ -34,6 +36,12 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [folderActionsModal, setFolderActionsModal] = useState<{
+    isOpen: boolean;
+    folderId: string;
+    folderName: string;
+  }>({ isOpen: false, folderId: "", folderName: "" });
+  const [renameValue, setRenameValue] = useState("");
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([
     {
@@ -71,6 +79,36 @@ export default function DashboardLayout({
         item.id === itemId ? { ...item, isExpanded: !item.isExpanded } : item,
       ),
     );
+  };
+
+  const openFolderActions = (folderId: string, folderName: string) => {
+    setFolderActionsModal({ isOpen: true, folderId, folderName });
+    setRenameValue(folderName);
+  };
+
+  const closeFolderActions = () => {
+    setFolderActionsModal({ isOpen: false, folderId: "", folderName: "" });
+    setRenameValue("");
+  };
+
+  const handleRenameFolder = () => {
+    if (renameValue.trim() && renameValue !== folderActionsModal.folderName) {
+      setSidebarItems((prev) =>
+        prev.map((item) =>
+          item.id === folderActionsModal.folderId
+            ? { ...item, name: renameValue.trim() }
+            : item,
+        ),
+      );
+    }
+    closeFolderActions();
+  };
+
+  const handleDeleteFolder = () => {
+    setSidebarItems((prev) =>
+      prev.filter((item) => item.id !== folderActionsModal.folderId),
+    );
+    closeFolderActions();
   };
 
   // Mock search results
@@ -153,18 +191,22 @@ export default function DashboardLayout({
     }
   };
 
-  // Handle ESC key to close modal
+  // Handle ESC key to close modals
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isSearchModalOpen) {
-        setIsSearchModalOpen(false);
-        setSearchQuery("");
+      if (event.key === "Escape") {
+        if (isSearchModalOpen) {
+          setIsSearchModalOpen(false);
+          setSearchQuery("");
+        } else if (folderActionsModal.isOpen) {
+          closeFolderActions();
+        }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isSearchModalOpen]);
+  }, [isSearchModalOpen, folderActionsModal.isOpen]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -242,7 +284,13 @@ export default function DashboardLayout({
                         </div>
                         {item.type === "folder" && (
                           <div className="flex items-center space-x-1">
-                            <button className="rounded p-0.5 hover:bg-gray-200">
+                            <button
+                              className="rounded p-0.5 hover:bg-gray-200"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openFolderActions(item.id, item.name);
+                              }}
+                            >
                               <MoreHorizontal className="h-3 w-3" />
                             </button>
                             <button className="rounded p-0.5 hover:bg-gray-200">
@@ -454,6 +502,106 @@ export default function DashboardLayout({
                 {filteredResults.length} items found
               </span>
               <span className="text-xs text-gray-400">Press ESC to close</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Folder Actions Modal */}
+      {folderActionsModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="mx-6 w-full max-w-md rounded-xl bg-white shadow-xl">
+            {/* Modal Header */}
+            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-6">
+              <div className="flex items-center space-x-3">
+                <Folder className="h-5 w-5 text-gray-600" />
+                <h2 className="text-base font-medium text-gray-900">
+                  Folder Actions
+                </h2>
+              </div>
+              <button
+                onClick={closeFolderActions}
+                className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6">
+              <div className="mb-6">
+                <p className="text-sm text-gray-600">
+                  Managing folder:{" "}
+                  <span className="font-medium text-gray-900">
+                    {folderActionsModal.folderName}
+                  </span>
+                </p>
+              </div>
+
+              {/* Rename Section */}
+              <div className="mb-6">
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Rename Folder
+                </label>
+                <div className="flex space-x-3">
+                  <input
+                    type="text"
+                    value={renameValue}
+                    onChange={(e) => setRenameValue(e.target.value)}
+                    className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                    placeholder="Enter new folder name"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleRenameFolder();
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={handleRenameFolder}
+                    disabled={
+                      !renameValue.trim() ||
+                      renameValue === folderActionsModal.folderName
+                    }
+                    className="flex items-center space-x-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+                  >
+                    <Edit3 className="h-4 w-4" />
+                    <span>Rename</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Delete Section */}
+              <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+                <div className="flex items-start space-x-3">
+                  <Trash2 className="mt-0.5 h-5 w-5 text-red-600" />
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium text-red-800">
+                      Delete Folder
+                    </h3>
+                    <p className="mt-1 text-sm text-red-700">
+                      This action cannot be undone. The folder and all its
+                      contents will be permanently removed.
+                    </p>
+                    <button
+                      onClick={handleDeleteFolder}
+                      className="mt-3 inline-flex items-center space-x-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span>Delete Folder</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-end border-t border-gray-200 px-6 py-3">
+              <button
+                onClick={closeFolderActions}
+                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
