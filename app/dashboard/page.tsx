@@ -198,7 +198,7 @@ export default function Home() {
                 </button>
                 <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                   <Settings className="h-4 w-4" />
-                  <span>Restore</span>
+                  <span>Settings</span>
                 </button>
               </div>
 
@@ -303,7 +303,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <button className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">
-                    Restore
+                    Settings
                   </button>
                   <button className="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800">
                     Dispose
