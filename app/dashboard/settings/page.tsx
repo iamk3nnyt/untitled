@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
-  Bell,
   ChevronRight,
   Download,
   File,
@@ -58,9 +57,6 @@ export default function SettingsPage() {
     },
   ]);
 
-  const [notifications, setNotifications] = useState(true);
-  const [autoDispose, setAutoDispose] = useState(false);
-
   const toggleSidebarItem = (id: string) => {
     setSidebarItems((prev) =>
       prev.map((item) =>
@@ -70,30 +66,6 @@ export default function SettingsPage() {
   };
 
   const settingSections = [
-    {
-      title: "General",
-      settings: [
-        {
-          id: "notifications",
-          icon: <Bell className="h-5 w-5" />,
-          title: "Notifications",
-          description: "Get notified when items are disposed or restored",
-          type: "toggle",
-          value: notifications,
-          onChange: setNotifications,
-        },
-        {
-          id: "auto-dispose",
-          icon: <Trash2 className="h-5 w-5" />,
-          title: "Auto Dispose",
-          description:
-            "Automatically dispose items after 90 days of inactivity",
-          type: "toggle",
-          value: autoDispose,
-          onChange: setAutoDispose,
-        },
-      ],
-    },
     {
       title: "Storage",
       settings: [
@@ -283,7 +255,7 @@ export default function SettingsPage() {
 
               {/* Settings Content */}
               <div className="flex-1 overflow-auto px-6 py-6">
-                <div className="max-w-4xl">
+                <div className="max-w-4xl min-w-[800px]">
                   <div className="mb-8">
                     <h1 className="text-2xl font-bold text-gray-900">
                       Settings
