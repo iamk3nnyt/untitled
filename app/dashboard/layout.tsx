@@ -11,10 +11,11 @@ import {
   Search,
   Settings,
   Upload,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SidebarItem = {
   id: string;
@@ -31,6 +32,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [sidebarItems, setSidebarItems] = useState<SidebarItem[]>([
     {
@@ -70,6 +73,99 @@ export default function DashboardLayout({
     );
   };
 
+  // Mock search results
+  const mockSearchResults = [
+    {
+      id: "1",
+      name: "old_resume.pdf",
+      type: "PDF",
+      size: "2.1MB",
+      location: "Maybe Later",
+      lastModified: "Mar. 15 2024",
+    },
+    {
+      id: "2",
+      name: "random_notes.txt",
+      type: "TXT",
+      size: "45KB",
+      location: "Maybe Later",
+      lastModified: "Jun. 08 2024",
+    },
+    {
+      id: "3",
+      name: "project_proposal.docx",
+      type: "DOCX",
+      size: "1.2MB",
+      location: "Old Projects",
+      lastModified: "Feb. 10 2024",
+    },
+    {
+      id: "4",
+      name: "vacation_photos",
+      type: "folder",
+      size: "",
+      location: "Random Docs",
+      lastModified: "Dec. 03 2023",
+    },
+    {
+      id: "5",
+      name: "maybe_useful.zip",
+      type: "ZIP",
+      size: "156MB",
+      location: "Maybe Later",
+      lastModified: "Jan. 22 2024",
+    },
+    {
+      id: "6",
+      name: "old_presentations.pptx",
+      type: "PPTX",
+      size: "89MB",
+      location: "Maybe Later",
+      lastModified: "Nov. 14 2023",
+    },
+  ];
+
+  const filteredResults = searchQuery
+    ? mockSearchResults.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.location.toLowerCase().includes(searchQuery.toLowerCase()),
+      )
+    : mockSearchResults;
+
+  const getFileIcon = (type: string) => {
+    switch (type) {
+      case "folder":
+        return "📁";
+      case "PDF":
+        return "📄";
+      case "TXT":
+        return "📝";
+      case "DOCX":
+        return "📄";
+      case "ZIP":
+        return "🗜️";
+      case "PPTX":
+        return "📊";
+      default:
+        return "📄";
+    }
+  };
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isSearchModalOpen) {
+        setIsSearchModalOpen(false);
+        setSearchQuery("");
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isSearchModalOpen]);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content */}
@@ -97,7 +193,10 @@ export default function DashboardLayout({
                   <Upload className="h-4 w-4" />
                   <span>Import</span>
                 </button>
-                <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
+                <button
+                  onClick={() => setIsSearchModalOpen(true)}
+                  className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100"
+                >
                   <Search className="h-4 w-4" />
                   <span>Find</span>
                 </button>
@@ -254,6 +353,111 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
+
+      {/* Search Modal */}
+      {isSearchModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="mx-6 w-full max-w-2xl rounded-xl bg-white shadow-xl">
+            {/* Modal Header */}
+            <div className="flex h-16 items-center justify-between border-b border-gray-200 px-6">
+              <div className="flex items-center space-x-3">
+                <Search className="h-5 w-5 text-gray-600" />
+                <h2 className="text-base font-medium text-gray-900">
+                  Find Disposed Items
+                </h2>
+              </div>
+              <button
+                onClick={() => {
+                  setIsSearchModalOpen(false);
+                  setSearchQuery("");
+                }}
+                className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Search Input */}
+            <div className="px-6 py-4">
+              <div className="relative">
+                <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search by name, type, or location..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2.5 pr-4 pl-10 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                  autoFocus
+                />
+              </div>
+            </div>
+
+            {/* Search Results */}
+            <div className="max-h-80 overflow-y-auto">
+              {filteredResults.length > 0 ? (
+                <div className="divide-y divide-gray-100">
+                  {filteredResults.map((item) => (
+                    <div
+                      key={item.id}
+                      className="group flex cursor-pointer items-center justify-between px-6 py-3 hover:bg-gray-50"
+                      onClick={() => {
+                        // Handle item selection
+                        console.log("Selected item:", item);
+                        setIsSearchModalOpen(false);
+                        setSearchQuery("");
+                      }}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="text-xl">{getFileIcon(item.type)}</div>
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-medium text-gray-900">
+                            {item.name}
+                          </div>
+                          <div className="truncate text-xs text-gray-500">
+                            in {item.location} • {item.lastModified}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        {item.type !== "folder" && (
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                            {item.type}
+                          </span>
+                        )}
+                        {item.size && (
+                          <span className="text-xs text-gray-500">
+                            {item.size}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="px-6 py-12 text-center">
+                  <Search className="mx-auto h-8 w-8 text-gray-300" />
+                  <h3 className="mt-3 text-sm font-medium text-gray-900">
+                    No items found
+                  </h3>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {searchQuery
+                      ? `No disposed items match "${searchQuery}"`
+                      : "Start typing to search your disposed items"}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between border-t border-gray-200 px-6 py-3">
+              <span className="text-xs text-gray-500">
+                {filteredResults.length} items found
+              </span>
+              <span className="text-xs text-gray-400">Press ESC to close</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
