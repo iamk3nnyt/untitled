@@ -155,7 +155,7 @@ export default function Home() {
                       Settings
                     </button>
                     <button className="rounded-md bg-gray-900 px-4 py-2 text-sm text-white">
-                      Dispose
+                      Import
                     </button>
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export default function Home() {
                     <div className="space-y-1 px-4 py-3">
                       <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                         <Upload className="h-4 w-4" />
-                        <span>Dispose</span>
+                        <span>Import</span>
                       </button>
                       <button className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-100">
                         <Search className="h-4 w-4" />
